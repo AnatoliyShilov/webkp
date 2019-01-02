@@ -1,0 +1,39 @@
+html {
+    font: 12pt sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #FFF;
+    font: 12pt sans-serif;
+}
+
+header {
+    background: #5C94EB;
+    height: 150px;
+}
+
+nav {
+    background: #BACFEF;
+}
+
+main {
+    background: #BACFEF;
+}
+
+footer {
+    background: #5C94EB;
+    height: 200px;
+}
+
+#sitename {
+    font: bold 24pt sans-serif;
+}
+
+.vspacer10px {
+    margin-bottom: 10px !important;
+}
+
+.hspacer10px {
+    margin-left: 10px !important;
+}

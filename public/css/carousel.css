@@ -1,0 +1,5 @@
+a.carousel-control-prev:hover,
+a.carousel-control-next:hover
+{
+    background-color: #BACFEF !important;
+}
