@@ -17,6 +17,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/products', 'ProductController@index');
 Route::get('/products/type/{id}', 'ProductController@index');
 
+Route::get('/news', 'NewsController@index');
+
+Route::get('/stocks', 'StockController@index');
 
 Route::group(['middleware' => 'checkUser'],
     function ()
@@ -74,10 +77,21 @@ Route::group(['middleware' => 'checkUser'],
                 Route::put('/deliverytypes/{id}', 'DeliveryTypeController@update'); // admin
                 Route::delete('/deliverytypes/{id}', 'DeliveryTypeController@destroy'); // admin
 
+                Route::get('/stocks/create/{id}', 'StockController@create'); // admin
+                Route::post('/stocks/{id}', 'StockController@store'); // admin
+                Route::get('/stocks/{id}/edit', 'StockController@edit'); // admin
+                Route::put('/stocks/{id}', 'StockController@update'); // admin
+                Route::delete('/stocks/{id}', 'StockController@destroy'); // admin
+
+                Route::get('/news/create', 'NewsController@create'); // admin
+                Route::post('/news', 'NewsController@store'); // admin
+                Route::get('/news/{id}/edit', 'NewsController@edit'); // admin
+                Route::put('/news/{id}', 'NewsController@update'); // admin
+                Route::delete('/news/{id}', 'NewsController@destroy'); // admin
+
                 Route::get('/users', 'UserController@index'); // admin
                 Route::get('/users/create', 'UserController@create'); // admin
                 Route::post('/users', 'UserController@store'); // admin
-
                 Route::get('/users/{id}/edit', 'UserController@edit'); // admin
                 Route::put('/users/{id}', 'UserController@update'); // admin
                 Route::delete('/users/{id}', 'UserController@destroy'); // admin

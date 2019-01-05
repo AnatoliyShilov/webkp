@@ -1,4 +1,4 @@
-@extends('layouts/show')
+@extends('layouts.show')
 
 @section('pageName', 'Просмотр товара ' . $product->name)
 
@@ -19,10 +19,13 @@
         </form>
         <div class="vspacer10px"></div>
     @endif
+    @if ($discount > 0)
+        <label>ТОВАР ПО АКЦИИ</label><br>
+    @endif
     <label>id: {{ $product->id }}</label><br>
     <label>Наименование: {{ $product->name }}</label><br>
     <label>Описание: {{ $product->description }}</label><br>
-    <label>Стоимоть: {{ $product->cost }}</label><br>
+    <label>Стоимоть: {{ $product->cost * (1 - $discount / 100) }}</label><br>
     <label>Оценка: {{ $product->rating }}</label><br>
     <label>Оценок всего: {{ $product->ratingcounter }}</label><br>
     <label>Тип товара: {{ $product->type }}</label><br>

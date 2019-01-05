@@ -1,6 +1,6 @@
 @extends('layouts.create')
 
-@section('pageName', 'Создание нового товар')
+@section('pageName', 'Создание нового товара')
 
 @section('urlStore', url('/products'))
 

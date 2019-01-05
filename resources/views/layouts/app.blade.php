@@ -73,7 +73,6 @@
                 </div>
             </div>
         </header>
-        @isset($types)
             <nav class="navbar navbar-light">
                 <a class="navbar-brand" href="#">
                     @yield('pageName')
@@ -91,6 +90,24 @@
                         @endif
                             <a class="nav-link" href={{ url('/home') }}>
                                 Главная
+                            </a>
+                        </li>
+                        @if (Request::url() == url('/news'))
+                            <li class="nav-item active">
+                        @else
+                            <li class="nav-item">
+                        @endif
+                            <a class="nav-link" href={{ url('/news') }}>
+                                Новости
+                            </a>
+                        </li>
+                        @if (Request::url() == url('/stocks'))
+                            <li class="nav-item active">
+                        @else
+                            <li class="nav-item">
+                        @endif
+                            <a class="nav-link" href={{ url('/stocks') }}>
+                                Акции
                             </a>
                         </li>
                         @if (Auth::check())
@@ -113,18 +130,22 @@
                                 </a>
                             </li>
                         @endif
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href={{ url('/products') }} id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Товары
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown05">
-                                @foreach ($types as $type)
-                                    <a class="dropdown-item" href={{ url('/products/type/' . $type->id) }}>
-                                        {{ $type->name }}
+                        @if (preg_match('/\/types/', Request::url()) != 1)
+                            @isset($types)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href={{ url('/products') }} id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Товары
                                     </a>
-                                @endforeach
-                            </div>
-                        </li>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown05">
+                                        @foreach ($types as $type)
+                                            <a class="dropdown-item" href={{ url('/products/type/' . $type->id) }}>
+                                                {{ $type->name }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </li>
+                            @endisset
+                        @endif
                         @if (Auth::check())
                             @if (Auth::user()->role == 0)
                                 @if (Request::url() == url('/users'))
@@ -186,7 +207,6 @@
                     </ul>
                 </div>
             </nav>
-        @endisset
         <div class="container d-flex flex-grow-1">
             <div class="row w-100 justify-content-center">
                 <main class="col container">

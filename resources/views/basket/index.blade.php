@@ -12,12 +12,12 @@
             <div class="d-flex">
                 <div class="card">
                     <div class="card-header">
-                        <label>Товар: {{ $productInBasket['product'] }}</label>
+                        <label>Товар: {{ $productsNames[$productInBasket['product']] }}</label>
                     </div>
                     <div class="card-body">
                         <label>Количество: {{ $productInBasket['count'] }}</label><br>
-                        <label>Цена: {{ $productInBasket['cost'] }}</label><br>
-                        <label>Сумма: {{ $productInBasket['count'] * $productInBasket['cost'] }}</label>
+                        <label>Цена: {{ $productInBasket['cost'] * (1 - $discounts[$productInBasket['product']]) }}</label><br>
+                        <label>Сумма: {{ $productInBasket['count'] * $productInBasket['cost'] * (1 - $discounts[$productInBasket['product']]) }}</label>
                     </div>
                 </div>
                 <div class="hspacer10px"></div>

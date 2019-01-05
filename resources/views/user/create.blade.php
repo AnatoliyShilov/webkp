@@ -5,7 +5,7 @@
 @section('urlStore', url('/users'))
 
 @section('inputFields')
-    <label for="nameinput">Наименование</label>
+    <label for="nameinput">Имя пользователя</label>
     <input class="form-control" id="nameinput" type="text" name="name">
     <label for="roleinput">Привилегия</label>
     <select class="form-control" id="roleinput" name="role">

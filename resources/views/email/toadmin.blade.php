@@ -9,7 +9,7 @@
             <label>Заказ №: {{ $order->id }}</label><br>
             <label>Тип оплаты: {{ $order->payTypeRec->name }}</label><br>
             <label>Способ доставки: {{ $order->deliveryTypeRec->name }}<label><br>
-            <label>Сумма: {{ $sumOfOrder }}</label><br>
+            <label>Сумма: {{ $order->sumoforder }}</label>
         </div>
     </div>
 </div>
