@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Mail;
 use Auth;
+use App\User;
 
 class Email implements ShouldQueue
 {
@@ -36,6 +37,6 @@ class Email implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to(Auth::user())->queue($this->mail);
+        Mail::to(User::where('role', '0')->first())->queue($this->mail);
     }
 }

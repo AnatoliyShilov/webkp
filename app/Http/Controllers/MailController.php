@@ -34,14 +34,10 @@ class MailController extends Mailable
     */
     public function build()
     {
-        $sumOfOrder = 0;
-        foreach ($this->basket as $element)
-            $sumOfOrder += $element['cost'] * $element['count'];
         return $this->view('email.toadmin')
                     ->with([
                         'user' => $this->user,
-                        'order' => $this->order,
-                        'sumOfOrder' => $sumOfOrder
+                        'order' => $this->order
                     ]);
     }
 }

@@ -100,13 +100,18 @@ class ProductController extends Controller
         $product = Product::find($id);
         $comments = $product->comments()->orderBy('created_at', 'desc')->paginate(10);
         $images = $product->images;
+        $discount = 0;
+        foreach ($product->stocks as $stock)
+            if (date('Y-m-d H:i:s') >= $stock->ablefrom && date('Y-m-d H:i:s') <= $stock->ableto)
+                $discount += $stock->discount;
         return view(
             'product.show', 
             [
                 'product' => $product, 
                 'comments' => $comments,
                 'images' => $images,
-                'types' => Type::all()
+                'types' => Type::all(),
+                'discount' => $discount
             ]
         );
     }

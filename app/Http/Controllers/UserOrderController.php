@@ -66,26 +66,35 @@ class UserOrderController extends Controller
                 'paytype' => 'required'
             ]
         );
+        $basket = $request->session()->get('basket');
+        if ($basket == null)
+            return redirect('/basket');
         $newUserOrder = new UserOrder;
         $newUserOrder->address = $request->input('address');
         $newUserOrder->deliverytype = $request->input('deliverytype');
         $newUserOrder->paytype = $request->input('paytype');
+        $newUserOrder->sumoforder = 0;
         if (Auth::check())
             $newUserOrder->user = Auth::id();
         else
             return redirect('/home');
         $newUserOrder->save();
-        $basket = $request->session()->get('basket');
-        if ($basket == null)
-            return redirect('/basket');
         foreach ($basket as $element)
         {
             $newProductList = new ProductList;
             $newProductList->userorder = $newUserOrder->id;
             $newProductList->product = $element['product'];
             $newProductList->count = $element['count'];
+            $discount = 0;
+            $product = product::find($element['product']);
+            foreach ($product->stocks as $stock)
+                if (date('Y-m-d H:i:s') >= $stock->ablefrom && date('Y-m-d H:i:s') <= $stock->ableto)
+                    $discount += $stock->discount;
+            $newProductList->cost = $product->cost * (1 - $discount / 100);
+            $newUserOrder->sumoforder += $newProductList->cost * $newProductList->count;
             $newProductList->save();
         }
+        $newUserOrder->save();
         Email::dispatch(new MailController(Auth::user(), $newUserOrder, $basket));
         $request->session()->forget('basket');
         return redirect('/home');

@@ -15,22 +15,34 @@ class BasketController extends Controller
      */
     public function index()
     {
+        $discounts = [];
+        $sumOfOrder = 0;
+        $productsNames = [];
         $basket = session()->get('basket');
         if ($basket == null)
         {
-            $basket = [];
+            $basket = [];   
         }
         else
         {
-            $sumOfOrder = 0;
             foreach ($basket as $element)
-                $sumOfOrder += $element['count'] * $element['cost'];
+            {
+                $discounts[$element['product']] = 0;
+                $productsNames[$element['product']] = Product::find($element['product'])->name;
+                foreach (Product::find($element['product'])->stocks as $stock)
+                    if (date('Y-m-d H:i:s') >= $stock->ablefrom && date('Y-m-d H:i:s') <= $stock->ableto)
+                        $discounts[$element['product']] += $stock->discount;
+                $discounts[$element['product']] = $discounts[$element['product']] / 100;
+                $sumOfOrder += $element['count'] * $element['cost'] * (1 - $discounts[$element['product']]);
+            }
         }
         return view('basket.index', 
             [
                 'basket' => $basket, 
                 'types' => Type::all(),
-                'sumOfOrder' => $sumOfOrder
+                'sumOfOrder' => $sumOfOrder,
+                'discounts' => $discounts,
+                'productsNames' => $productsNames
             ]
         );
     }

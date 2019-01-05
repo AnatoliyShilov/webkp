@@ -23,6 +23,14 @@ class Product extends Model
     }
 
     /**
+     * Get the stocks for the product
+     */
+    public function stocks()
+    {
+        return $this->hasMany('App\Stock', 'product');
+    }
+
+    /**
      * Get the type record associated with the product
      */
     public function typeRec()
